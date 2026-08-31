@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>хз что писать ВОТ ПРЯМ ТАК И ПИШИ!!!</title>
+<style>
+  :root {
+    color-scheme: dark;
+  }
+  html, body {
+    height: 100%;
+    background: #000;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* ===== фон с глазами ===== */
+  .fof {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    z-index: 1;
+  }
+
+  .fof canvas {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: #000;
+    display: block;
+  }
+
+  /* ===== LIQUID GLASS ===== */
+  .liquidGlass-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+
+    display: flex;
+    overflow: hidden;
+    isolation: isolate;
+
+    width: 90%;
+    max-width: 640px;
+    max-height: 82dvh;
+    box-sizing: border-box;
+
+    border-radius: 22px;
+    box-shadow: 
+      0 15px 35px rgba(0, 0, 0, 0.65),
+      0 0 0 1px rgba(255, 255, 255, 0.06);
+
+    /* декоративные слои внутри (эффект/тонировка/блик) не должны ловить клики,
+       но текстовому блоку ниже мы явно вернём pointer-events: auto,
+       иначе скролл текста не работает вообще (см. .liquidGlass-text) */
+    pointer-events: none;
+  }
+
+  .liquidGlass-effect {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .liquidGlass-tint {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(12, 12, 20, 0.28);
+  }
+
+  .liquidGlass-shine {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    box-shadow: 
+      inset 1px 1px 1px 0 rgba(255, 255, 255, 0.35),
+      inset -1px -1px 1px 1px rgba(255, 255, 255, 0.12);
+  }
+
+  .liquidGlass-text {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    scrollbar-width: none;
+
+    /* главная правка: возвращаем интерактивность именно этому блоку,
+       родитель .liquidGlass-wrapper выключил pointer-events для всех детей */
+    pointer-events: auto;
+
+    padding: clamp(20px, 5vw, 40px) clamp(20px, 6vw, 40px);
+    padding-top: max(clamp(20px, 5vw, 40px), env(safe-area-inset-top));
+    padding-bottom: max(clamp(20px, 5vw, 40px), env(safe-area-inset-bottom));
+
+    text-align: center;
+    color: #e2e8f0;
+    box-sizing: border-box;
+  }
+
+  .liquidGlass-text::-webkit-scrollbar { display: none; }
+
+  .liquidGlass-text h1 {
+    color: #a5b4fc;
+    margin: 0 0 16px;
+    font-size: clamp(1.2rem, 4.5vw, 1.8rem);
+    text-shadow: 0 0 12px rgba(129, 140, 248, 0.55), 0 1px 3px rgba(0,0,0,0.8);
+  }
+
+  .liquidGlass-text p {
+    line-height: 1.55;
+    margin: 0 0 14px;
+    font-size: clamp(0.85rem, 3.6vw, 1.05rem);
+    color: #cbd5e1;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.85);
+  }
+
+  .liquidGlass-text p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .liquidGlass-text .hint {
+    margin-top: 18px;
+    font-size: clamp(0.72rem, 3vw, 0.85rem);
+    color: #94a3b8;
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 480px) {
+    .liquidGlass-wrapper {
+      width: 94%;
+      max-height: 78dvh;
+      border-radius: 18px;
+    }
+    .liquidGlass-text p {
+      margin-bottom: 10px;
+    }
+  }
+</style>
+</head>
+<body translate="no">
+
+  <!-- фон: глаза, следящие за пальцем/курсором -->
+  <div class="fof">
+    <canvas></canvas>
+  </div>
+
+  <!-- жидкое стекло с текстом -->
+  <div class="liquidGlass-wrapper">
+    <div class="liquidGlass-effect"></div>
+    <div class="liquidGlass-tint"></div>
+    <div class="liquidGlass-shine"></div>
+    <div class="liquidGlass-text">
+      <h1>хз что писать...</h1>
+      
+      <p>Сори, что не выходил на связь и так и не сделал приложение... дааа-дааа я ЭТО сообщение денек назад начал писать, но после твоего повтороного голосования за 'космос' я поКОнчил с этим текстом, кхм!</p>
+      
+      <p>Ммм... С чего бы начать? Во-первых, я переехал в другую столицу и поселился тут в общаге. Общага — это типа дом для студентов (а.к.а. школьники, которые выжили), и мы тут все вместе живём... БЕЗ РОДИТЕЛЕЙ!!!</p>
+      
+      <p>Спрашивается, ну не это ли МЕЧТА?! НО НЕТ!!! Хочу тебя огорчить, но у нас тут есть пида... коменданты! И я чую своей жопо... кхм, то есть ж…утко чувствительной интуицией чую, что наши тюремщики (кхм, то есть коменданты) будут за нами активно следить, как ЭТИ глазки. И да-да, у них глаза похуже ЭТИХ, поверь мне!!! И постараются за любую провинность выселить, а это улица и жить мне БОМЖом (кхм, то есть человеком Без Определённого Места Жительства).</p>
+      
+      <p>Нуу и так как я поступил на грант (ну то есть за мою учёбу мне будут платить в том случае, если я буду получать пятёрки), учителя из-за этого точно-точно будут делать мне подлянки, чтобы как бы вернуть грант государству... нууу и себе частично в карман. Ну это если вкратце.</p>
+      
+      <p>А насчёт приложения... мд-а, если честно, я в ЭТОМ первооткрыватель, и поэтому всё идёт очень-очень сложно, но я не сдаюсь! И тебе советую)) Стараюсь вот-вот всё сделать, но как назло вылезают новые ошибки. И кстати, в качестве компенсации за ущерб в ожидании... закину тебе луну, или ты против?~</p>
+      
+      <p>Короче, можешь мне так же через те картинки написать, как ты, что ты там — мне будет интересно почитать! Только помни: родаки БДЯТ!!! Поэтому будь осторожней:3</p>
+      
+      <p>И кстати, поздравляю с 1 сентября!!! Ой, то есть соболезную((</p>
+      
+      <p>И ещё: да-да, я тут еле как интернет нашёл (а то, что в Геншине онлайн... это за меня друг играет, да! Кхм). У меня тут в другой столице отсутствует интернет и в общаге пока тоже, мой сотовый интернет приказал долго жить, и поэтому нашёл мини-кафешку с БЕСПЛАТНЫМ ИНЕТОМ и там стараюсь сидеть... нуу и найти в процессе что-то съедобное, а то оказалось, что из-за отсутствия родителей мне нечего кушац... даже человеков нельзя, ведь за ЭТО посадят на бутылку правосудия, и в целом это ОЧЕНЬ-ОЧЕНЬ плохо, и даже не пробуй!</p>
+      
+      <p>Кхм, вроде всё сказал...</p>
+
+      <p class="hint">P.S. Поводи пальцем или мышкой по экрану, тут за тобой приглядывают</p>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    var DISPLAY_WIDTH = window.innerWidth,
+        DISPLAY_HEIGHT = window.innerHeight,
+        DISPLAY_DURATION = 10;
+
+    var mouse = { x: 0, y: 0 },
+        canvas, context, startTime, eyes;
+
+    function initialize() {
+      canvas = document.querySelector('.fof>canvas');
+      if (!canvas) return;
+
+      canvas.width = DISPLAY_WIDTH;
+      canvas.height = DISPLAY_HEIGHT;
+      context = canvas.getContext('2d');
+
+      window.addEventListener('mousemove', function (event) {
+        mouse.x = event.clientX;
+        mouse.y = event.clientY;
+      }, false);
+
+      window.addEventListener('touchmove', function (event) {
+        if (event.touches.length > 0) {
+          mouse.x = event.touches[0].clientX;
+          mouse.y = event.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchstart', function (event) {
+        if (event.touches.length > 0) {
+          mouse.x = event.touches[0].clientX;
+          mouse.y = event.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      eyes = [
+        new Eye(canvas, 0.19, 0.80, 0.88, 0.31),
+        new Eye(canvas, 0.10, 0.54, 0.84, 0.32),
+        new Eye(canvas, 0.81, 0.13, 0.63, 0.33),
+        new Eye(canvas, 0.89, 0.19, 0.58, 0.34),
+        new Eye(canvas, 0.40, 0.08, 0.97, 0.35),
+        new Eye(canvas, 0.64, 0.74, 0.57, 0.36),
+        new Eye(canvas, 0.41, 0.89, 0.56, 0.37),
+        new Eye(canvas, 0.92, 0.89, 0.75, 0.38),
+        new Eye(canvas, 0.27, 0.20, 0.87, 0.39),
+        new Eye(canvas, 0.17, 0.46, 0.68, 0.41),
+        new Eye(canvas, 0.71, 0.29, 0.93, 0.42),
+        new Eye(canvas, 0.84, 0.46, 0.54, 0.43),
+        new Eye(canvas, 0.93, 0.35, 0.63, 0.44),
+        new Eye(canvas, 0.77, 0.82, 0.85, 0.45),
+        new Eye(canvas, 0.36, 0.74, 0.90, 0.46),
+        new Eye(canvas, 0.13, 0.24, 0.85, 0.47),
+        new Eye(canvas, 0.58, 0.20, 0.77, 0.48),
+        new Eye(canvas, 0.55, 0.84, 0.87, 0.50),
+        new Eye(canvas, 0.50, 0.50, 5.00, 0.10)
+      ];
+
+      startTime = Date.now();
+      animate();
+    }
+
+    function animate() {
+      var seconds = (Date.now() - startTime) / 1000;
+      context.clearRect(0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT);
+
+      for (var i = 0, len = eyes.length; i < len; i++) {
+        var eye = eyes[i];
+        if (seconds > eye.activationTime * DISPLAY_DURATION) eye.activate();
+        eye.update(mouse);
+      }
+
+      requestAnimFrame(animate);
+    }
+
+    window.addEventListener('resize', function () {
+      DISPLAY_WIDTH = window.innerWidth;
+      DISPLAY_HEIGHT = window.innerHeight;
+      if (canvas) {
+        canvas.width = DISPLAY_WIDTH;
+        canvas.height = DISPLAY_HEIGHT;
+      }
+    });
+
+    setTimeout(initialize, 1);
+  })();
+
+  function Eye(canvas, x, y, scale, time) {
+    this.canvas = canvas;
+    this.context = this.canvas.getContext('2d');
+    this.activationTime = time;
+    this.irisSpeed = 0.01 + Math.random() * 0.2 / scale;
+    this.blinkSpeed = 0.2 + Math.random() * 0.2;
+    this.blinkInterval = 5000 + 5000 * Math.random();
+    this.blinkTime = Date.now();
+    this.scale = scale;
+    this.size = 70 * scale;
+    this.x = x * canvas.width;
+    this.y = y * canvas.height + this.size * 0.15;
+    this.iris = { x: this.x, y: this.y - this.size * 0.1, size: this.size * 0.2 };
+    this.pupil = { width: 2 * scale, height: this.iris.size * 0.75 };
+    this.exposure = { top: 0.1 + Math.random() * 0.3, bottom: 0.5 + Math.random() * 0.3, current: 0, target: 1 };
+    this.tiredness = 0.5 - this.exposure.top + 0.1;
+    this.isActive = false;
+
+    this.activate = function () { this.isActive = true; };
+    this.update = function (mouse) { if (this.isActive === true) this.render(mouse); };
+
+    this.render = function (mouse) {
+      var time = Date.now();
+
+      if (this.exposure.current < 0.012) {
+        this.exposure.target = 1;
+      } else if (time - this.blinkTime > this.blinkInterval) {
+        this.exposure.target = 0;
+        this.blinkTime = time;
+      }
+
+      this.exposure.current += (this.exposure.target - this.exposure.current) * this.blinkSpeed;
+
+      var el = { x: this.x - this.size * 0.8, y: this.y - this.size * 0.1 };
+      var er = { x: this.x + this.size * 0.8, y: this.y - this.size * 0.1 };
+      var et = { x: this.x, y: this.y - this.size * (0.5 + this.exposure.top * this.exposure.current) };
+      var eb = { x: this.x, y: this.y - this.size * (0.5 - this.exposure.bottom * this.exposure.current) };
+      var eit = { x: this.x, y: this.y - this.size * (0.5 + (0.5 - this.tiredness) * this.exposure.current) };
+      var ei = { x: this.x, y: this.y - this.iris.size };
+
+      var eio = {
+        x: (mouse.x - ei.x) / (window.innerWidth - ei.x),
+        y: mouse.y / window.innerHeight
+      };
+
+      ei.x += eio.x * 16 * Math.max(1, this.scale * 0.4);
+      ei.y += eio.y * 10 * Math.max(1, this.scale * 0.4);
+
+      this.iris.x += (ei.x - this.iris.x) * this.irisSpeed;
+      this.iris.y += (ei.y - this.iris.y) * this.irisSpeed;
+
+      this.context.fillStyle = 'rgba(255,255,255,1.0)';
+      this.context.strokeStyle = 'rgba(100,100,100,1.0)';
+      this.context.beginPath();
+      this.context.lineWidth = 3;
+      this.context.lineJoin = 'round';
+      this.context.moveTo(el.x, el.y);
+      this.context.quadraticCurveTo(et.x, et.y, er.x, er.y);
+      this.context.quadraticCurveTo(eb.x, eb.y, el.x, el.y);
+      this.context.closePath();
+      this.context.stroke();
+      this.context.fill();
+
+      this.context.save();
+      this.context.globalCompositeOperation = 'source-atop';
+      this.context.translate(this.iris.x * 0.1, 0);
+      this.context.scale(0.9, 1);
+      this.context.strokeStyle = 'rgba(0,0,0,0.5)';
+      this.context.fillStyle = 'rgba(130,50,90,0.9)';
+      this.context.lineWidth = 2;
+      this.context.beginPath();
+      this.context.arc(this.iris.x, this.iris.y, this.iris.size, 0, Math.PI * 2, true);
+      this.context.fill();
+      this.context.stroke();
+      this.context.restore();
+
+      this.context.save();
+      this.context.shadowColor = 'rgba(255,255,255,0.5)';
+      this.context.shadowOffsetX = 0;
+      this.context.shadowOffsetY = 0;
+      this.context.shadowBlur = 2 * this.scale;
+      this.context.globalCompositeOperation = 'source-atop';
+      this.context.translate(this.iris.x * 0.1, 0);
+      this.context.scale(0.9, 1);
+      this.context.fillStyle = 'rgba(255,255,255,0.2)';
+      this.context.beginPath();
+      this.context.arc(this.iris.x, this.iris.y, this.iris.size * 0.7, 0, Math.PI * 2, true);
+      this.context.fill();
+      this.context.restore();
+
+      this.context.save();
+      this.context.globalCompositeOperation = 'source-atop';
+      this.context.fillStyle = 'rgba(0,0,0,0.9)';
+      this.context.beginPath();
+      this.context.moveTo(this.iris.x, this.iris.y - this.pupil.height * 0.5);
+      this.context.quadraticCurveTo(this.iris.x + this.pupil.width * 0.5, this.iris.y, this.iris.x, this.iris.y + this.pupil.height * 0.5);
+      this.context.quadraticCurveTo(this.iris.x - this.pupil.width * 0.5, this.iris.y, this.iris.x, this.iris.y - this.pupil.height * 0.5);
+      this.context.fill();
+      this.context.restore();
+
+      this.context.save();
+      this.context.shadowColor = 'rgba(0,0,0,0.9)';
+      this.context.shadowOffsetX = 0;
+      this.context.shadowOffsetY = 0;
+      this.context.shadowBlur = 10;
+      this.context.fillStyle = 'rgba(120,120,120,0.2)';
+      this.context.beginPath();
+      this.context.moveTo(el.x, el.y);
+      this.context.quadraticCurveTo(et.x, et.y, er.x, er.y);
+      this.context.quadraticCurveTo(eit.x, eit.y, el.x, el.y);
+      this.context.closePath();
+      this.context.fill();
+      this.context.restore();
+    };
+  }
+
+  window.requestAnimFrame = (function () {
+    return window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      function (callback) { window.setTimeout(callback, 1000 / 60); };
+  })();
+  </script>
+</body>
+</html>
